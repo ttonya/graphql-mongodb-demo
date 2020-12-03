@@ -1,52 +1,26 @@
-const { gql } = require("apollo-server-express");
+import { gql } from "apollo-server-express";
 
 export const typeDefs = gql(`
 type Query {
-	placeSuggestions(value: String): [SearchPlace]
-	placeInfo(place_id: ID, location: LocationInput, name: String): PlaceInfo
+	posts: [Post]
 }
 
-type Mutation {
-	addToFavorites(id: ID): String
+type Post {
+	_id: ID
+	user: User
+	text: String
+	replies: [Reply]
 }
 
-type PlaceInfo {
-	place: Place
-	thingstodo: [Place]
+type Reply{
+	_id: ID
+	text: String
+	user: User
 }
 
-type Place {
-	place_id: ID
-	formatted_address: String
-	location: Location
+type User {
+	_id: ID
 	name: String
-	rating: Float
-	photos: [Photo]
-	website: String
-}
-
-type SearchPlace {
-	description: String
-	place_id: ID
-	formatted_address: String
-	location: Location
-	name: String
-	rating: Float
-	photos: [Photo]
-	website: String
-}
-
-input LocationInput {
-	lat: Float
-	lng: Float
-}
-
-type Location {
-	lat: Float
-	lng: Float
-}
-
-type Photo {
-	height: Int, photo_reference: String, width: Int 
+	email: String
 }
 `);
